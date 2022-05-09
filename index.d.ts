@@ -73,7 +73,6 @@ declare module "react-native-twilio-video-webrtc" {
 
 	export type RoomEventCb = (p: RoomEventArgs) => void;
 	export type RoomErrorEventCb = (t: RoomErrorEventArgs) => void;
-
 	export type ParticipantEventCb = (p: ParticipantEventArgs) => void;
 
 	export type NetworkLevelChangeEventCb = (
