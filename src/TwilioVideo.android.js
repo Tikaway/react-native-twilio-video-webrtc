@@ -6,8 +6,8 @@
  *   Ralph Pina <slycoder@gmail.com>
  *   Jonathan Chang <slycoder@gmail.com>
  */
-
-import { Component } from "react";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import React, { Component } from "react";
 import {
 	findNodeHandle,
 	Platform,
@@ -15,6 +15,9 @@ import {
 	UIManager,
 	View,
 } from "react-native";
+
+// to keep it imported
+const t = React;
 
 import PropTypes from "prop-types";
 
