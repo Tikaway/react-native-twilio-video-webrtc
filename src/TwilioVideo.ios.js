@@ -24,6 +24,9 @@ export default class TwilioVideo extends Component {
 		 * @param {{roomName, participants}}
 		 */
 		onRoomDidConnect: PropTypes.func,
+
+		onRoomReconnecting: PropTypes.func,
+		onRoomReconnected: PropTypes.func,
 		/**
 		 * Called when the room has disconnected
 		 *
@@ -327,9 +330,9 @@ export default class TwilioVideo extends Component {
 	_registerEvents() {
 		TWVideoModule.changeListenerStatus(true);
 		this._subscriptions = [
-			this._eventEmitter.addListener("roomDidConnect", (data) => {
-				if (this.props.onRoomDidConnect) {
-					this.props.onRoomDidConnect(data);
+			this._eventEmitter.addListener("roomReconnecting", (data) => {
+				if (this.props.onRoomReconnecting) {
+					this.props.onRoomReconnecting(data);
 				}
 			}),
 			this._eventEmitter.addListener("roomReconnected", (data) => {

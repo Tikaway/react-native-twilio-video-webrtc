@@ -10,6 +10,8 @@
 
 #import "RCTTWSerializable.h"
 
+static NSString* roomReconnected               = @"roomReconnected";
+static NSString* roomReconnecting               = @"roomReconnecting";
 static NSString* roomDidConnect               = @"roomDidConnect";
 static NSString* roomDidDisconnect            = @"roomDidDisconnect";
 static NSString* roomDidFailToConnect         = @"roomDidFailToConnect";
@@ -89,6 +91,8 @@ RCT_EXPORT_MODULE();
 
 - (NSArray<NSString *> *)supportedEvents {
   return @[
+    roomReconnected,
+    roomReconnecting,
     roomDidConnect,
     roomDidDisconnect,
     roomDidFailToConnect,
