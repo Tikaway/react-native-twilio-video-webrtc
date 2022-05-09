@@ -22,6 +22,8 @@ import java.util.Map;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_AUDIO_CHANGED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CAMERA_SWITCHED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CONNECTED;
+import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_RECONNECTING;
+import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_RECONNECTED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CONNECT_FAILURE;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_DISCONNECTED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_PARTICIPANT_CONNECTED;
@@ -154,6 +156,8 @@ public class CustomTwilioVideoViewManager extends SimpleViewManager<CustomTwilio
                 ON_VIDEO_CHANGED, MapBuilder.of("registrationName", ON_VIDEO_CHANGED),
                 ON_AUDIO_CHANGED, MapBuilder.of("registrationName", ON_AUDIO_CHANGED),
                 ON_CONNECTED, MapBuilder.of("registrationName", ON_CONNECTED),
+                ON_RECONNECTING, MapBuilder.of("registrationName", ON_RECONNECTING),
+                ON_RECONNECTED, MapBuilder.of("registrationName", ON_RECONNECTED),
                 ON_CONNECT_FAILURE, MapBuilder.of("registrationName", ON_CONNECT_FAILURE),
                 ON_DISCONNECTED, MapBuilder.of("registrationName", ON_DISCONNECTED),
                 ON_PARTICIPANT_CONNECTED, MapBuilder.of("registrationName", ON_PARTICIPANT_CONNECTED)
