@@ -948,7 +948,7 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
             }
 
             @Override
-            public void onReconnecting(@NonNull Room room, @NonNull TwilioException twilioException) {
+            public void onReconnecting(@NonNull Room room, @NonNull TwilioException e) {
                 WritableMap event = new WritableNativeMap();
                 event.putString("roomName", room.getName());
                 event.putString("roomSid", room.getSid());
