@@ -23,7 +23,6 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.util.Log;
 import android.view.View;
@@ -948,22 +947,20 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
             }
 
             @Override
-            public void onReconnecting(@NonNull Room room, @NonNull TwilioException e) {
+            public void onReconnecting(Room room, TwilioException e) {
                 WritableMap event = new WritableNativeMap();
                 event.putString("roomName", room.getName());
                 event.putString("roomSid", room.getSid());
                 event.putString("error", e.getMessage());
                 pushEvent(CustomTwilioVideoView.this, ON_RECONNECTING, event);
-
             }
 
             @Override
-            public void onReconnected(@NonNull Room room) {
+            public void onReconnected(Room room) {
                 WritableMap event = new WritableNativeMap();
                 event.putString("roomName", room.getName());
                 event.putString("roomSid", room.getSid());
                 pushEvent(CustomTwilioVideoView.this, ON_RECONNECTED, event);
-
             }
 
             @Override
