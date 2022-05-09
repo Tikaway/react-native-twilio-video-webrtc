@@ -23,8 +23,8 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringDef;
 import android.util.Log;
 import android.view.View;
 
@@ -91,6 +91,8 @@ import java.util.List;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_AUDIO_CHANGED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CAMERA_SWITCHED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CONNECTED;
+import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_RECONNECTING;
+import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_RECONNECTED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_CONNECT_FAILURE;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_DISCONNECTED;
 import static com.twiliorn.library.CustomTwilioVideoView.Events.ON_DATATRACK_MESSAGE_RECEIVED;
@@ -132,6 +134,8 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
             Events.ON_VIDEO_CHANGED,
             Events.ON_AUDIO_CHANGED,
             Events.ON_CONNECTED,
+            Events.ON_RECONNECTING,
+            Events.ON_RECONNECTED,
             Events.ON_CONNECT_FAILURE,
             Events.ON_DISCONNECTED,
             Events.ON_PARTICIPANT_CONNECTED,
@@ -157,6 +161,8 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
         String ON_VIDEO_CHANGED = "onVideoChanged";
         String ON_AUDIO_CHANGED = "onAudioChanged";
         String ON_CONNECTED = "onRoomDidConnect";
+        String ON_RECONNECTING = "onRoomReconnecting";
+        String ON_RECONNECTED = "onRoomReconnected";
         String ON_CONNECT_FAILURE = "onRoomDidFailToConnect";
         String ON_DISCONNECTED = "onRoomDidDisconnect";
         String ON_PARTICIPANT_CONNECTED = "onRoomParticipantDidConnect";
@@ -561,14 +567,14 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
         for (int i = 0; i < devicesInfo.length; i++) {
             int deviceType = devicesInfo[i].getType();
             if (
-                deviceType == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
-                deviceType == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
+                    deviceType == AudioDeviceInfo.TYPE_WIRED_HEADSET ||
+                            deviceType == AudioDeviceInfo.TYPE_WIRED_HEADPHONES
             ) {
                 hasNonSpeakerphoneDevice = true;
             }
             if (
-                deviceType == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP ||
-                deviceType == AudioDeviceInfo.TYPE_BLUETOOTH_SCO
+                    deviceType == AudioDeviceInfo.TYPE_BLUETOOTH_A2DP ||
+                            deviceType == AudioDeviceInfo.TYPE_BLUETOOTH_SCO
             ) {
                 audioManager.startBluetoothSco();
                 audioManager.setBluetoothScoOn(true);
@@ -943,11 +949,20 @@ public class CustomTwilioVideoView extends View implements LifecycleEventListene
 
             @Override
             public void onReconnecting(@NonNull Room room, @NonNull TwilioException twilioException) {
+                WritableMap event = new WritableNativeMap();
+                event.putString("roomName", room.getName());
+                event.putString("roomSid", room.getSid());
+                event.putString("error", e.getMessage());
+                pushEvent(CustomTwilioVideoView.this, ON_RECONNECTING, event);
 
             }
 
             @Override
             public void onReconnected(@NonNull Room room) {
+                WritableMap event = new WritableNativeMap();
+                event.putString("roomName", room.getName());
+                event.putString("roomSid", room.getSid());
+                pushEvent(CustomTwilioVideoView.this, ON_RECONNECTED, event);
 
             }
 
